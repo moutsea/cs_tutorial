@@ -72,10 +72,8 @@ def is_swap(score0, score1):
     """Return whether one of the scores is an integer multiple of the other."""
     # BEGIN PROBLEM 4
     "*** YOUR CODE HERE ***"
-    if score0 == 0 and score1 == 0:
+    if score0 <= 1 or score1 <= 1:
         return False
-    if score0 == 0 or score1 == 0:
-        return True
     return score0 % score1 == 0 or score1 % score0 == 0
     # END PROBLEM 4
 
