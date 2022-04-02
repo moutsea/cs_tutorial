@@ -214,7 +214,7 @@ def announce_highest(who, previous_high=0, previous_score=0):
 
         if gain > previous_high:
             previous_high = gain
-            print("{} points! That's the biggest gain yet for Player {}".format(gain, who))
+            print("{} {}! That's the biggest gain yet for Player {}".format(gain, 'points' if gain > 1 else 'point', who))
         return say
     return say
     # END PROBLEM 7
@@ -345,9 +345,12 @@ def swap_strategy(score, opponent_score, margin=8, num_rolls=4):
     """
     # BEGIN PROBLEM 11
     gain = free_bacon(opponent_score)
-    if is_swap(score+gain, opponent_score) and opponent_score > score+gain:
+    score += gain
+    if gain >= margin and not is_swap(score, opponent_score):
         return 0
-    return 0 if gain >= margin else num_rolls
+    if is_swap(score, opponent_score) and opponent_score >= score + margin:
+        return 0
+    return num_rolls
     # END PROBLEM 11
 
 
@@ -358,9 +361,15 @@ def final_strategy(score, opponent_score):
     """
     # BEGIN PROBLEM 12
     max_roll = max_scoring_num_rolls(num_samples=100)
-    if score > opponent_score:
-        return min(max_roll, 3)
-    margin = opponent_score - score + 1
+    num = swap_strategy(score, opponent_score, 100-score, max_roll)
+    if num == 0:
+        return 0
+    avg_dice = make_averaged(roll_dice, 100)
+    for i in range(1, 4):
+        gain = avg_dice(i)
+        if score + gain >= 100:
+            return i
+    margin = opponent_score - score + 1 if opponent_score > score else 8
     return swap_strategy(score, opponent_score, margin, max_roll)
     # END PROBLEM 12
 
