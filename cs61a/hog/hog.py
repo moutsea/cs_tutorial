@@ -203,19 +203,18 @@ def announce_highest(who, previous_high=0, previous_score=0):
     # BEGIN PROBLEM 7
     "*** YOUR CODE HERE ***"
     def say(score0, score1):
-        nonlocal previous_high
-        nonlocal previous_score
         if who == 0:
             gain = score0 - previous_score
-            previous_score = score0
+            new_score = score0
         else:
             gain = score1 - previous_score
-            previous_score = score1
+            new_score = score1
 
+        new_high = previous_high
         if gain > previous_high:
-            previous_high = gain
+            new_high = gain
             print("{} {}! That's the biggest gain yet for Player {}".format(gain, 'points' if gain > 1 else 'point', who))
-        return say
+        return announce_highest(who, new_high, new_score)
     return say
     # END PROBLEM 7
 
