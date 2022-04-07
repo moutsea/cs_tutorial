@@ -359,6 +359,10 @@ def final_strategy(score, opponent_score):
     *** YOUR DESCRIPTION HERE ***
     """
     # BEGIN PROBLEM 12
+    if opponent_score > score and is_swap(score+1, opponent_score):
+        return 10
+    if score > opponent_score and is_swap(score+1, opponent_score):
+        return 0
     max_roll = max_scoring_num_rolls(num_samples=100)
     num = swap_strategy(score, opponent_score, 100-score, max_roll)
     if num == 0:
@@ -368,7 +372,7 @@ def final_strategy(score, opponent_score):
         gain = avg_dice(i)
         if score + gain >= 100:
             return i
-    margin = opponent_score - score + 1 if opponent_score > score else 8
+    margin = opponent_score - score + 1 if opponent_score > score else 6
     return swap_strategy(score, opponent_score, margin, max_roll)
     # END PROBLEM 12
 
