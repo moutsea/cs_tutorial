@@ -87,7 +87,10 @@
                (body   (cddr expr)))
            ; BEGIN PROBLEM 19
             (define combine (zip values))
-            (cons (cons 'lambda (cons (let-to-lambda (car combine)) (cons (let-to-lambda (car body)) nil))) (map let-to-lambda (cadr combine)))
+            (cons 
+                (cons 'lambda (cons (let-to-lambda (car combine)) (cons (let-to-lambda (car body)) nil))) 
+                (map let-to-lambda (cadr combine))
+            )
            ; END PROBLEM 19
            ))
         (else
